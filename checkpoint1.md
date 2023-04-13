@@ -5,6 +5,9 @@
 - [Set-Up Debug Environment](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md#set-up-debug-environment)
 - [Map Out Target Code-Base](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md#map-out-target-code-base)
 - [Plans for Rest of Project](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md#plans-for-rest-of-project)
+- [Resources and Research](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md#resources-and-research)
+
+-----
 
 ### General Overview
 <sub>**Instruction:** Provide a short general overview of your target. What are its intended use-cases,
@@ -14,12 +17,8 @@ We want to be able to understand how malware works via reversing. We plan on doi
 
 Since WannaCry has a built-in kill switch, checking the domain name iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com, we want to look at harder samples of malware after this target to look at and reverse.
 
-*Resources & Research*
-- [Textbook] Practical Malware Analysis: The Hands-On Guide to Dissecting Malicious Software by Michael Sikorski and Andrew Honig
-- [FlareVM](https://github.com/mandiant/flare-vm) for setting up a reverse engineering environment on a VM w/ helpful scripts
-- [WannaCry binary](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo GitHub repository
-
 -----
+
 ### Set-Up Debug Environment
 <sub>**Instruction:** Set up a debug environment for your target. If you are targeting an embedded
 device this might include setting up emulation, for windows targets you might need a
@@ -28,8 +27,8 @@ flags to set up source code debugging if possible. Do what you can given your
 target, describe what you did, and upload required files for this to your team’s github
 repository.</sub>
 
-
 -----
+
 ### Map Out Target Code-Base
 <sub>**Instruction:** Map out the targets code-base. Your target probably has many source directories
 with various different files. In this part we want you to describe the general layout
@@ -39,5 +38,13 @@ code-sections, etc.</sub>
 
 
 -----
+
 ### Plans for Rest of Project
 <sub>**Instruction:** What are your plans for the rest of the project?</sub>
+
+-----
+
+### Resources & Research
+- [Textbook] Practical Malware Analysis: The Hands-On Guide to Dissecting Malicious Software by Michael Sikorski and Andrew Honig
+- [FlareVM](https://github.com/mandiant/flare-vm) for setting up a reverse engineering environment on a VM w/ helpful scripts
+- [WannaCry binary](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo GitHub repository
