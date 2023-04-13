@@ -27,6 +27,8 @@ flags to set up source code debugging if possible. Do what you can given your
 target, describe what you did, and upload required files for this to your team’s github
 repository.</sub>
 
+We plan on setting up a virtual machine for everyone to work off of. Since WannaCry depends on a vulnerability found in Windows' [Server Message Block (SMB) protocol](https://www.cisecurity.org/insights/blog/commonly-exploited-protocols-server-message-block-smb), we would need to set up a Windows environment to debug. We found [FlareVM](https://github.com/mandiant/flare-vm) as a potential tool for setting up the reversing environment on a VM. 
+
 -----
 
 ### Map Out Target Code-Base
@@ -36,6 +38,7 @@ and purpose of different files, major functions, etc. From this we should geta g
 idea of where exactly in the target-code we should look to find specific features,
 code-sections, etc.</sub>
 
+We have a sample of the binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample.
 
 -----
 
@@ -44,7 +47,7 @@ code-sections, etc.</sub>
 
 -----
 
-### Resources & Research
+### Resources and Research
 - [Textbook] Practical Malware Analysis: The Hands-On Guide to Dissecting Malicious Software by Michael Sikorski and Andrew Honig
 - [FlareVM](https://github.com/mandiant/flare-vm) for setting up a reverse engineering environment on a VM w/ helpful scripts
 - [WannaCry binary](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo GitHub repository
