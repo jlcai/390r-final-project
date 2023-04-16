@@ -51,3 +51,4 @@ We have a sample of the binary [here](https://github.com/ytisf/theZoo/tree/maste
 - [Textbook] Practical Malware Analysis: The Hands-On Guide to Dissecting Malicious Software by Michael Sikorski and Andrew Honig
 - [FlareVM](https://github.com/mandiant/flare-vm) for setting up a reverse engineering environment on a VM w/ helpful scripts
 - [WannaCry binary](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo GitHub repository
+- [Windows 7 iso](https://www.softlay.com/downloads/windows-7-ultimate)
