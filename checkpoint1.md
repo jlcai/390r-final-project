@@ -24,6 +24,8 @@ We know that WannaCry is based off asymmetric and symmetric encryption. In the s
 
 Since WannaCry has a built-in kill switch that is (supposedly) easy to switch and requires the Internet to check for the domain name iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com, we want to look at harder samples of malware after this target to look at and reverse.
 
+[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
+
 -----
 
 ### Set-Up Debug Environment
@@ -37,6 +39,8 @@ repository._
 We plan on setting up a virtual machine for everyone to work off of. Since WannaCry depends on a vulnerability found in Windows' [Server Message Block (SMB) protocol](https://www.cisecurity.org/insights/blog/commonly-exploited-protocols-server-message-block-smb), we would need to set up a Windows environment to debug. WannaCry also does not work on Windows Vista, 8, 10, or any other modern Windows release, so we found a Windows 7 iso to work off of. 
 We also found [FlareVM](https://github.com/mandiant/flare-vm) as a potential tool for setting up the reversing environment on a VM. 
 
+[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
+
 -----
 
 ### Map Out Target Code-Base
@@ -48,10 +52,14 @@ code-sections, etc._
 
 We have a sample of the binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample.
 
+[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
+
 -----
 
 ### Plans for Rest of Project
 _**Instruction:** What are your plans for the rest of the project?_
+
+[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
 -----
 
@@ -60,3 +68,5 @@ _**Instruction:** What are your plans for the rest of the project?_
 - [FlareVM](https://github.com/mandiant/flare-vm) for setting up a reverse engineering environment on a VM w/ helpful scripts
 - [WannaCry binary](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo GitHub repository
 - [Windows 7 iso](https://www.softlay.com/downloads/windows-7-ultimate)
+
+[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
