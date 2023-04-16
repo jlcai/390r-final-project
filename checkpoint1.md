@@ -13,9 +13,9 @@
 _**Instruction:** Provide a short general overview of your target. What are its intended use-cases,
 what type of features does it support, etc._
 
-We want to be able to understand how malware works via reversing. We plan on doing research via the Practical Malware Analysis textbook as well as looking at a target sample of malware. Our initial target is the well-documented malware [**WannaCry**](https://en.wikipedia.org/wiki/WannaCry_ransomware_attack). WannaCry is a ransomware cryptoworm that targets computers, encrypts their files, and asks for Bitcoin as remittence for decryption. We want to understand how malware is structured by looking at the decompiled binary in Ghidra. Although the source code of WannaCry exists online, we want to be able to understand it through the whole process of reversing and looking at the binary itself.
+We want to understand how malware works by reversing it. Our plan involves using the Practical Malware Analysis textbook and examining a sample of malware. Our initial target is [**WannaCry**](https://en.wikipedia.org/wiki/WannaCry_ransomware_attack), a well-documented ransomware cryptoworm that targets computers, encrypts their files, and asks for Bitcoin as remittence for decryption. We aim to understand the structure of malware by analyzing the decompiled binary in Ghidra. Although the source code of WannaCry is available online, we want to gain a comprehensive understanding of it by going through the entire process of reversing and examining the binary.
 
-We know that WannaCry is based off asymmetric and symmetric encryption. In the symmetric portion, there is one key that is used for encryption and decryption and uses the AES encryption system. For the asymmetric encryption portion, there are two keys: one public, one private. The public key encrypts while the private key decrypts (RSA public-key encryption system). This is how our initial target works:
+We know that WannaCry is based off asymmetric and symmetric encryption. The symmetric encryption employs a single key for encryption and decryption (AES encryption system). The asymmetric encryption portion employs two keys: one public, one private. The public key encrypts while the private key decrypts (RSA public-key encryption system). This is how our initial target works:
 1. makes symmetric and asymmetric keys (attacker side)
 2. encrypts files with asymmetric (attacker side)
 3. encrypts asymmetric key with symmetric key (victim side)
@@ -36,8 +36,10 @@ flags to set up source code debugging if possible. Do what you can given your
 target, describe what you did, and upload required files for this to your team’s github
 repository._
 
-We plan on setting up a virtual machine for everyone to work off of. Since WannaCry depends on a vulnerability found in Windows' [Server Message Block (SMB) protocol](https://www.cisecurity.org/insights/blog/commonly-exploited-protocols-server-message-block-smb), we would need to set up a Windows environment to debug. WannaCry also does not work on Windows Vista, 8, 10, or any other modern Windows release, so we found a Windows 7 iso to work off of. 
+We plan on setting up a virtual machine for everyone to work off of. Since WannaCry depends on a vulnerability found in Windows' [Server Message Block (SMB) protocol](https://www.cisecurity.org/insights/blog/commonly-exploited-protocols-server-message-block-smb), we would need to set up a Windows environment to debug. WannaCry also does not work on Windows Vista, 8, 10, or any other modern Windows release, so we found a [Windows 7 iso](https://www.softlay.com/downloads/windows-7-ultimate) to work off of. 
 We also found [FlareVM](https://github.com/mandiant/flare-vm) as a potential tool for setting up the reversing environment on a VM. 
+
+![Windows 7 VM](https://github.com/jlcai/390r-final-project/blob/main/screenshots/win7_vm_ss.png?raw=true)
 
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
@@ -50,7 +52,7 @@ and purpose of different files, major functions, etc. From this we should geta g
 idea of where exactly in the target-code we should look to find specific features,
 code-sections, etc._
 
-We have a sample of the binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample.
+We have a sample of the WannaCry binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample. The password for the zip file is `infected`, as given by the `.pass` file in the directory.
 
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
