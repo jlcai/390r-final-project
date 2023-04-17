@@ -94,6 +94,10 @@ A strange looking file extension worth investigating:
 
 ![t_wnry_file](./screenshots/t_wnry_file.png)
 
+Addresses to pay bitcoin to:
+
+![bitcoin_address](./screenshots/bitcoin_addresses.png)
+
 
 By starting here, we get a general sense of what the program is capable of as well as some very good clues as to what some of the functions are doing. This allows us to identify the functions involved with the string, and use them as a stepping stone to understand the functions that call those functions. Along with looking at what library functions are being called in each function, even though the number of functions called by the program is quite a large number this helps narrow down the areas of interest. 
 
