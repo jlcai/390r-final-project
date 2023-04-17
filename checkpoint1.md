@@ -63,6 +63,8 @@ We have a sample of the WannaCry binary [here](https://github.com/ytisf/theZoo/t
 ### Plans for Rest of Project
 _**Instruction:** What are your plans for the rest of the project?_
 
+As mentioned previously in the general overview section, we plan to use WannaCry as an initial stepping stone to understand how to reverse malware. We plan on finding another sample later to reverse engineer -- with the sample not being as well-documented as WannaCry is already.
+
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
 -----
