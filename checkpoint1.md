@@ -78,17 +78,26 @@ All the file extensions it looks to encrypt (not all fit in screenshot):
 
 ![File Extensions](./screenshots/File_Extensions.png)
 
-The name of the process it runs itself as: Taskshe.exe 
+The name of the process it runs itself as: tasksche.exe 
 
 ![Self Name](./screenshots/tasksche.png)
 
-A couple of intersting looking commands and possible injections:
+A couple of interesting looking commands and possible injections:
 
 ![icals](./screenshots/icals.png)
 
 ![cmd](./screenshots/cmd.png)
 
 ![mutex](./screenshots/mutex.png)
+
+A strange looking file extension worth investigating:
+
+![t_wnry_file](./screenshots/t_wnry_file.png)
+
+
+By starting here, we get a general sense of what the program is capable of as well as some very good clues as to what some of the functions are doing. This allows us to identify the functions involved with the string, and use them as a stepping stone to understand the functions that call those functions. Along with looking at what library functions are being called in each function, even though the number of functions called by the program is quite a large number this helps narrow down the areas of interest. 
+
+![function_fun](./screenshots/function_fun.png)
 
 
 
