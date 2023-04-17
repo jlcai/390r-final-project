@@ -39,6 +39,8 @@ repository._
 We plan on setting up a virtual machine for everyone to work off of. Since WannaCry depends on a vulnerability found in Windows' [Server Message Block (SMB) protocol](https://www.cisecurity.org/insights/blog/commonly-exploited-protocols-server-message-block-smb), we would need to set up a Windows environment to debug. WannaCry also does not work on Windows Vista, 8, 10, or any other modern Windows release, so we found a [Windows 7 iso](https://www.softlay.com/downloads/windows-7-ultimate) to work off of. 
 We also found [FlareVM](https://github.com/mandiant/flare-vm) as a potential tool for setting up the reversing environment on a VM. 
 
+After getting the VM set up with Windows 7, we first had to install Firefox since Internet Explorer was too outdated to function. We got Ghidra to statically analyze the virus, then downloaded the WannaCry binary from the Github repository linked later on. After downloading, I disconnected the network connection between the VM and the host while also diabling the auto-connect setting VMware has enabled by default. 
+
 ![Windows 7 VM](https://github.com/jlcai/390r-final-project/blob/main/screenshots/win7_vm_ss.png?raw=true)
 
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
