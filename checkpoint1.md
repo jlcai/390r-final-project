@@ -13,9 +13,9 @@
 _**Instruction:** Provide a short general overview of your target. What are its intended use-cases,
 what type of features does it support, etc._
 
-We want to be able to understand how malware works via reversing. We plan on doing research via the Practical Malware Analysis textbook as well as looking at a target sample of malware. Our initial target is the well-documented malware [**WannaCry**](https://en.wikipedia.org/wiki/WannaCry_ransomware_attack). WannaCry is a ransomware cryptoworm that targets computers, encrypts their files, and asks for Bitcoin as remittence for decryption. We want to understand how malware is structured by looking at the decompiled binary in Ghidra. Although the source code of WannaCry exists online, we want to be able to understand it through the whole process of reversing and looking at the binary itself.
+We want to understand how malware works by reversing it. Our plan involves using the Practical Malware Analysis textbook and examining a sample of malware. Our initial target is [**WannaCry**](https://en.wikipedia.org/wiki/WannaCry_ransomware_attack), a well-documented ransomware cryptoworm that targets computers, encrypts their files, and asks for Bitcoin as remittence for decryption. We aim to understand the structure of malware by analyzing the decompiled binary in Ghidra. Although the source code of WannaCry is available online, we want to gain a comprehensive understanding of it by going through the entire process of reversing and examining the binary.
 
-We know that WannaCry is based off asymmetric and symmetric encryption. In the symmetric portion, there is one key that is used for encryption and decryption and uses the AES encryption system. For the asymmetric encryption portion, there are two keys: one public, one private. The public key encrypts while the private key decrypts (RSA public-key encryption system). This is how our initial target works:
+We know that WannaCry is based off asymmetric and symmetric encryption. The symmetric encryption employs a single key for encryption and decryption (AES encryption system). The asymmetric encryption portion employs two keys: one public, one private. The public key encrypts while the private key decrypts (RSA public-key encryption system). This is how our initial target works:
 1. makes symmetric and asymmetric keys (attacker side)
 2. encrypts files with asymmetric (attacker side)
 3. encrypts asymmetric key with symmetric key (victim side)
@@ -36,8 +36,12 @@ flags to set up source code debugging if possible. Do what you can given your
 target, describe what you did, and upload required files for this to your team’s github
 repository._
 
-We plan on setting up a virtual machine for everyone to work off of. Since WannaCry depends on a vulnerability found in Windows' [Server Message Block (SMB) protocol](https://www.cisecurity.org/insights/blog/commonly-exploited-protocols-server-message-block-smb), we would need to set up a Windows environment to debug. WannaCry also does not work on Windows Vista, 8, 10, or any other modern Windows release, so we found a Windows 7 iso to work off of. 
+We plan on setting up a virtual machine for everyone to work off of. Since WannaCry depends on a vulnerability found in Windows' [Server Message Block (SMB) protocol](https://www.cisecurity.org/insights/blog/commonly-exploited-protocols-server-message-block-smb), we would need to set up a Windows environment to debug. WannaCry also does not work on Windows Vista, 8, 10, or any other modern Windows release, so we found a [Windows 7 iso](https://www.softlay.com/downloads/windows-7-ultimate) to work off of. 
 We also found [FlareVM](https://github.com/mandiant/flare-vm) as a potential tool for setting up the reversing environment on a VM. 
+
+After getting the VM set up with Windows 7, we first had to install Firefox since Internet Explorer was too outdated to function. We got Ghidra to statically analyze the virus, then downloaded the WannaCry binary from the Github repository linked later on. After downloading, I disconnected the network connection between the VM and the host while also diabling the auto-connect setting VMware has enabled by default. 
+
+![Windows 7 VM](https://github.com/jlcai/390r-final-project/blob/main/screenshots/win7_vm_ss.png?raw=true)
 
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
@@ -50,7 +54,54 @@ and purpose of different files, major functions, etc. From this we should geta g
 idea of where exactly in the target-code we should look to find specific features,
 code-sections, etc._
 
-We have a sample of the binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample.
+We have a sample of the WannaCry binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample. The password for the zip file is `infected`, as given by the `.pass` file in the directory.
+
+Unpacking the binary reveals a single `.exe` file. We can use Ghidra to look at the decompiled binary.
+
+The first thing I noticed was the `.dll`'s included. These help contextualize what the program is capable of doing. It has 4 `.dll` libraries:
+
+- `ADVAPI32.DLL`, which deals with windows registry and security. This includes encryption, which makes sense for a ransomware
+- `KERNAL32.DLL`, which handles a variety of things in regards to memory. Reading, writing, copying files. Getting file attributes, getting absolute pathnames, allocating and freeing heap memory, pointers, etc.
+- `MSVCRT.DLL`, the C standard library which allows the c code to be compiled and run properly. 
+- `USER32.DLL`, a user interface library that presumbly is used to create the popup that the victims
+
+![DLL Screenshot](./screenshots/dll.png)
+
+Interestingly, there are not a lot of crypto functions in `ADVAPI` listed in Ghidra. However, when going to the data section, string for the windows crypto functions can be found. Following the listed call location to the function all of them are in, you can see that
+the program gets their address for use. 
+
+![Crypto Process](./screenshots/Crypto_Functions.png)
+
+There is a variety of other interesting strings to be found in the `data` section. Some of particular note:
+
+All the file extensions that our target looks to encrypt (not all fit in screenshot):
+
+![File Extensions](./screenshots/File_Extensions.png)
+
+The name of the process it runs itself as: `tasksche.exe`
+
+![Self Name](./screenshots/tasksche.png)
+
+A couple of interesting looking commands and possible injections:
+
+![icals](./screenshots/icals.png)
+
+![cmd](./screenshots/cmd.png)
+
+![mutex](./screenshots/mutex.png)
+
+A strange looking file extension worth investigating:
+
+![t_wnry_file](./screenshots/t_wnry_file.png)
+
+Addresses to pay bitcoin to:
+
+![bitcoin_address](./screenshots/bitcoin_addresses.png)
+
+
+By starting here, we get a general sense of what the program is capable of as well as some very good clues as to what some of the functions are doing. This allows us to identify the functions involved with the string, and use them as a stepping stone to understand the functions that call those functions. Along with looking at what library functions are being called in each function, even though the number of functions called by the program is quite a large number this helps narrow down the areas of interest. 
+
+![function_fun](./screenshots/function_fun.png)
 
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
@@ -58,6 +109,8 @@ We have a sample of the binary [here](https://github.com/ytisf/theZoo/tree/maste
 
 ### Plans for Rest of Project
 _**Instruction:** What are your plans for the rest of the project?_
+
+As mentioned previously in the general overview section, we plan to use WannaCry as an initial stepping stone to understand how to reverse malware. We plan on finding other samples to reverse engineer to hopefully be able to identify common patterns that could be identified in antivirus software as well as see what can be done to mitigate the effects of them aside from patching exploits.
 
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
