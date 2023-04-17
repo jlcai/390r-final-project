@@ -56,6 +56,44 @@ code-sections, etc._
 
 We have a sample of the WannaCry binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample. The password for the zip file is `infected`, as given by the `.pass` file in the directory.
 
+Unpacking the binary reveals a single exe file. This can be decompiled in ghidra and get taken a look at. 
+
+The first thing I noticed was the dll's included. These help contextualize what the program is capable of doing. It has 4 dll libraries:
+
+ADVAPI32.DLL, which deals with windows registry and security. This includes encryption, which makes sense for a ransomware
+KERNAL32.DLL, which handles a variety of things in regards to memory. Reading, writing, copying files. Getting file attributes, getting absolute pathnames, allocating and freeing heap memory, pointers, etc.
+MSVCRT.DLL, the C standard library which allows the c code to be compiled and run properly. 
+USER32.DLL, a user interface library that presumbly is used to create the popup that the victims
+
+![DLL Screenshot](./screenshots/dll.png)
+
+Interstingly there is not a lot of crypto functions in ADVAPI listed in Ghidra. However, when going to the data section, string for the windows crypto functions can be found. Following the listed call location to the function all of them are in you can see that
+the program gets their address for use. 
+
+![Crypto Process](./screenshots/Crypto_Functions.png)
+
+There is a variety of other interesting strings to be found in the data section. Some of particular note:
+
+All the file extensions it looks to encrypt (not all fit in screenshot):
+
+![File Extensions](./screenshots/File_Extensions.png)
+
+The name of the process it runs itself as: Taskshe.exe 
+
+![Self Name](./screenshots/tasksche.png)
+
+A couple of intersting looking commands and possible injections:
+
+![icals](./screenshots/icals.png)
+
+![cmd](./screenshots/cmd.png)
+
+![mutex](./screenshots/mutex.png)
+
+
+
+
+
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
 -----
