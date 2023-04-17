@@ -56,29 +56,29 @@ code-sections, etc._
 
 We have a sample of the WannaCry binary [here](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo Github repository. There are many samples of this live malware on the Internet as well as source code. We are not going to explicitly look at the source code so not to be spoiled by it itself, so we are going to be doing manual reversing on this sample. The password for the zip file is `infected`, as given by the `.pass` file in the directory.
 
-Unpacking the binary reveals a single exe file. This can be decompiled in ghidra and get taken a look at. 
+Unpacking the binary reveals a single `.exe` file. We can use Ghidra to look at the decompiled binary.
 
-The first thing I noticed was the dll's included. These help contextualize what the program is capable of doing. It has 4 dll libraries:
+The first thing I noticed was the `.dll`'s included. These help contextualize what the program is capable of doing. It has 4 `.dll` libraries:
 
-ADVAPI32.DLL, which deals with windows registry and security. This includes encryption, which makes sense for a ransomware
-KERNAL32.DLL, which handles a variety of things in regards to memory. Reading, writing, copying files. Getting file attributes, getting absolute pathnames, allocating and freeing heap memory, pointers, etc.
-MSVCRT.DLL, the C standard library which allows the c code to be compiled and run properly. 
-USER32.DLL, a user interface library that presumbly is used to create the popup that the victims
+- `ADVAPI32.DLL`, which deals with windows registry and security. This includes encryption, which makes sense for a ransomware
+- `KERNAL32.DLL`, which handles a variety of things in regards to memory. Reading, writing, copying files. Getting file attributes, getting absolute pathnames, allocating and freeing heap memory, pointers, etc.
+- `MSVCRT.DLL`, the C standard library which allows the c code to be compiled and run properly. 
+- `USER32.DLL`, a user interface library that presumbly is used to create the popup that the victims
 
 ![DLL Screenshot](./screenshots/dll.png)
 
-Interstingly there is not a lot of crypto functions in ADVAPI listed in Ghidra. However, when going to the data section, string for the windows crypto functions can be found. Following the listed call location to the function all of them are in you can see that
+Interestingly, there are not a lot of crypto functions in `ADVAPI` listed in Ghidra. However, when going to the data section, string for the windows crypto functions can be found. Following the listed call location to the function all of them are in, you can see that
 the program gets their address for use. 
 
 ![Crypto Process](./screenshots/Crypto_Functions.png)
 
-There is a variety of other interesting strings to be found in the data section. Some of particular note:
+There is a variety of other interesting strings to be found in the `data` section. Some of particular note:
 
-All the file extensions it looks to encrypt (not all fit in screenshot):
+All the file extensions that our target looks to encrypt (not all fit in screenshot):
 
 ![File Extensions](./screenshots/File_Extensions.png)
 
-The name of the process it runs itself as: tasksche.exe 
+The name of the process it runs itself as: `tasksche.exe`
 
 ![Self Name](./screenshots/tasksche.png)
 
@@ -103,10 +103,6 @@ By starting here, we get a general sense of what the program is capable of as we
 
 ![function_fun](./screenshots/function_fun.png)
 
-
-
-
-
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
 -----
@@ -114,7 +110,7 @@ By starting here, we get a general sense of what the program is capable of as we
 ### Plans for Rest of Project
 _**Instruction:** What are your plans for the rest of the project?_
 
-As mentioned previously in the general overview section, we plan to use WannaCry as an initial stepping stone to understand how to reverse malware. We plan on finding another sample later to reverse engineer -- with the sample not being as well-documented as WannaCry is already.
+As mentioned previously in the general overview section, we plan to use WannaCry as an initial stepping stone to understand how to reverse malware. We plan on finding other samples to reverse engineer to hopefully be able to identify common patterns that could be identified in antivirus software as well as see what can be done to mitigate the effects of them aside from patching exploits.
 
 [Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint1.md)
 
