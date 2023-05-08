@@ -1,61 +1,16 @@
-# SPRING 2023 CS390R Final Project - Checkpoint #1
+# SPRING 2023 CS390R Final Project - Checkpoint #2
 
-## Table of Contents
-- [General Overview](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md#general-overview)
-- [Set-Up Debug Environment](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md#set-up-debug-environment)
-- [Map Out Target Code-Base](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md#map-out-target-code-base)
-- [Plans for Rest of Project](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md#plans-for-rest-of-project)
-- [Resources and Research](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md#resources-and-research)
+### WannaCry Ransomware Research
 
------
+#### Server Message Block (SMB) Vulnerability
+As mentioned in our previous checkpoint, we know that WannaCry depends on a vulnerability found in Windows' Server Message Block (SMB) version 1.0 protocol, and that it does not work on Windows Vista, 8, 10, or any other modern Windows release, so we set up our initial debug environment on a Windows 7 VM.
 
-### General Overview
-_**Instruction:** Provide a short general overview of your target. What are its intended use-cases,
-what type of features does it support, etc._
+The SMB protocol is a communication protocol that is used to share access for resources on a network. SMBv.1 was developed in the 1980s and can be vulnerable to pre-authentication integrity, encryption, and other exploits if not patched (this later got patched on March 14, 2017 in security bulletin MS17-010). SMBv1 uses the MD5 (message-digest) algorithm that is a cryptographic protocol that is used to authenticate messages, content verification, and digital signatures. It takes some message of arbitrary length as an input and returns a fixed-length digest hash value as an output that is used to authenticate the original input message. This hash value that the MD5 algorithm outputs becomes important in the encryption process of WannaCry.
 
-[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md)
-
------
+In the malware lecture, we talked about Eternal Blue, which is a computer exploit that was developed by the NSA to exploit the SMB protocol. Later on, this exploit was repackaged into WannaCry. 
 
 
+#### Asymmetric and Symmetric Encryption
+We know that the WannaCry ransomware depends on asymmetric and symmetric encryption. Although we outlined this in our initial checkpoint, this checkpoint will delve more into the intricacies of how these types of encryption work in general as well as how WannaCry utilizes it.
 
-### Set-Up Debug Environment
-_**Instruction:** Set up a debug environment for your target. If you are targeting an embedded
-device this might include setting up emulation, for windows targets you might need a
-windows debugger, and in some cases you may want to play around with compile
-flags to set up source code debugging if possible. Do what you can given your
-target, describe what you did, and upload required files for this to your team’s github
-repository._
-
-[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md)
-
------
-
-### Map Out Target Code-Base
-_**Instruction:** Map out the targets code-base. Your target probably has many source directories
-with various different files. In this part we want you to describe the general layout
-and purpose of different files, major functions, etc. From this we should geta good
-idea of where exactly in the target-code we should look to find specific features,
-code-sections, etc._
-
-
-
-[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md)
-
------
-
-### Plans for Rest of Project
-_**Instruction:** What are your plans for the rest of the project?_
-
-
-[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md)
-
------
-
-### Resources and Research
-- [Textbook] Practical Malware Analysis: The Hands-On Guide to Dissecting Malicious Software by Michael Sikorski and Andrew Honig
-- [FlareVM](https://github.com/mandiant/flare-vm) for setting up a reverse engineering environment on a VM w/ helpful scripts
-- [WannaCry binary](https://github.com/ytisf/theZoo/tree/master/malware/Binaries/Ransomware.WannaCry) from theZoo GitHub repository
-- [Windows 7 iso](https://www.softlay.com/downloads/windows-7-ultimate)
-
-[Back to Top](https://github.com/jlcai/390r-final-project/blob/main/checkpoint2.md)
+The aforementioned hash values that come as a result of the MD5 algorithm portion of the SMBv1 protocol were used to 
