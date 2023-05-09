@@ -103,6 +103,12 @@ The executable consists of 4 headers: .text, .data, .rdata, and .rsrc. The .rscr
 
 PeStudio found that the executable is hiding an embedded file in the .rsrc section called PKZIP. PKZIP is what is taking up most of the file space across the entire program, so this is our actual malware. Putting the malware here instead of in .text where the program would generally go is another method of obfuscation and packing, making it harder for the programs intent to be discovered. 
 
+This is supported by performing entropy analysis using binwalk. The command used being : binwalk -E wannacry.exe
+
+![Entropy Graph](/screenshots/binwalk_entropy.png)
+
+This entropy graph helps validate the findings through PeStudio. We can see sections of low entropy in the start of the binary, those being the text and data sections. However we can see the vast majority of the binary has extremely high entropy, meaning it's either compressed or encrypted. This helps validate the findings of the PeStudio analysis and confirm that the majority of the binary is compressed as well as where that compression actually is whithin the binary. This helps speed up analysis of the binary as we know which sections have readable data and which are compressed and difficult to decipher. 
+
 #### File Extensions
 
 This is where PeStudio caught many malicious strings in the program. We can see that these strings are representing different function calls and Windows Systems calls. These include modifying registry values, copying, writing to, and destroying files, creating and modifying system services and processes, creating and destroying cryptographic keys, and encrypting file data. From these files, PeStudio tells us that the program is most likely ransomware or wiper malware, which WannaCry most certainly is.
