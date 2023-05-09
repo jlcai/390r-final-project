@@ -81,12 +81,13 @@ Once a machine is compromised with the ransomware, the ransomware automatically 
 After encryption of one machine, it installs **DoublePulsar**, a backdoor tool that runs in kernel mode allowing attackers control over a target system, as a payload that spreads copies of WannaCry onto more systems of vulnerable TCP port 455 machines.
 - [What is the WannaCry Ransomware Attack? | UpGuard](https://www.upguard.com/blog/wannacry)
 
-<<<<<<< HEAD
 ##### Scripting Attempts
 Began working on a Ghidra script to view the control flow of the program along with the total amount of times each function is called but ran into issues finding info from the API. Another idea was to find all 
 referenced functions from DLLs but not entirely sure if this needs to be automated at all. Most of my time went into watching Youtube tutorials on how to write scripts for Ghidra or trying to search the API for
 methods to get certain information.
+
 =======
+
 ### PeStudio Analysis
 
 ![Running PeStudio](/screenshots/PeStudio_malware_header.png)
