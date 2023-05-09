@@ -80,3 +80,7 @@ Once a machine is compromised with the ransomware, the ransomware automatically 
 
 After encryption of one machine, it installs **DoublePulsar**, a backdoor tool that runs in kernel mode allowing attackers control over a target system, as a payload that spreads copies of WannaCry onto more systems of vulnerable TCP port 455 machines.
 - [What is the WannaCry Ransomware Attack? | UpGuard](https://www.upguard.com/blog/wannacry)
+
+
+#### Automated Analysis
+We used [PeStudio](https://www.winitor.com/) to analyze WannaCry. PeStudio is used to analyze Windows executables for malware and has a host of different features. Running it on the WannaCry executable we are told that its entropy, a measure of a malware's obfuscation, is 7.995 on a range of 0-8. Which means the malware is heavily obfuscated and packed. 
