@@ -81,11 +81,58 @@ Once a machine is compromised with the ransomware, the ransomware automatically 
 After encryption of one machine, it installs **DoublePulsar**, a backdoor tool that runs in kernel mode allowing attackers control over a target system, as a payload that spreads copies of WannaCry onto more systems of vulnerable TCP port 455 machines.
 - [What is the WannaCry Ransomware Attack? | UpGuard](https://www.upguard.com/blog/wannacry)
 
+<<<<<<< HEAD
 ##### Scripting Attempts
 Began working on a Ghidra script to view the control flow of the program along with the total amount of times each function is called but ran into issues finding info from the API. Another idea was to find all 
 referenced functions from DLLs but not entirely sure if this needs to be automated at all. Most of my time went into watching Youtube tutorials on how to write scripts for Ghidra or trying to search the API for
 methods to get certain information.
+=======
+### PeStudio Analysis
 
-##### Continued Analysis
+![Running PeStudio](/screenshots/PeStudio_malware_header.png)
+
+We used [PeStudio](https://www.winitor.com/) to analyze WannaCry. PeStudio is used to analyze Windows executables for malware and has a host of different features. Running it on the WannaCry executable we are told that its entropy, a measure of a malware's obfuscation, is 7.995 on a range of 0-8. Which means the malware is heavily obfuscated and packed. After letting PeStudio run, it returns with a few malicious indicators.  The top 4 are:
+- Resource sizes
+- Embedded files
+- File extensions
+- Imports
+
+![Indicators](/screenshots/PeStudio_indicators.png)
+
+#### Resource Sizes
+
+The executable consists of 4 headers: .text, .data, .rdata, and .rsrc. The .rscr section contains the resources required by the program. In this executable, the .rsrc header consists of 98.14% of the entire program, a common sign of malware as a method of obfuscation. 
+
+![Section Sizes](/screenshots/PeStudio_sections.png)
+
+#### Embedded Files
+
+PeStudio found that the executable is hiding an embedded file in the .rsrc section called PKZIP. PKZIP is what is taking up most of the file space across the entire program, so this is our actual malware. Putting the malware here instead of in .text where the program would generally go is another method of obfuscation and packing, making it harder for the programs intent to be discovered. 
+
+This is supported by performing entropy analysis using binwalk. The command used being : binwalk -E wannacry.exe
+
+![Entropy Graph](/screenshots/binwalk_entropy.png)
+
+This entropy graph helps validate the findings through PeStudio. We can see sections of low entropy in the start of the binary, those being the text and data sections. However we can see the vast majority of the binary has extremely high entropy, meaning it's either compressed or encrypted. This helps validate the findings of the PeStudio analysis and confirm that the majority of the binary is compressed as well as where that compression actually is whithin the binary. This helps speed up analysis of the binary as we know which sections have readable data and which are compressed and difficult to decipher. 
+
+#### File Extensions
+
+This is where PeStudio caught many malicious strings in the program. We can see that these strings are representing different function calls and Windows Systems calls. These include modifying registry values, copying, writing to, and destroying files, creating and modifying system services and processes, creating and destroying cryptographic keys, and encrypting file data. From these files, PeStudio tells us that the program is most likely ransomware or wiper malware, which WannaCry most certainly is.
+
+![File Extensions](/screenshots/PeStudio_strings.png)
+
+### Imports
+
+Finally, we have the imports. Many malwares rely on importing various DLLs to perform different functions just like any other program. But by studying which imports a program uses, we can determine if it is a malicious actor or not. In this case, the program is using imports to create services and processes, edit registry values, write to files, and calling rand and srand to generate cryptographic keys. One of the specific imports it uses is VirtualProtect.
+
+### VirtualProtect
+
+Virtual protect is a function that changes the protection of a memory address in the process's space. This allows the malware to read, write, and execute from various parts of the memory, which lets a malicious actor write and execute code anywhere they want if they have the permissions.
+
+
+## Scripting Attempts
+Began working on a Ghidra script to view the control flow of the program along with the total amount of times each function is called but ran into issues finding info from the API.
+Another idea was to find all referenced functions from DLLs but not entirely sure if this needs to be automated at all.
+
+### Continued Analysis
 Additionally found the winMain function from entry and discovered more functionality further in. Found where a directory is created and a file that seems to have the attributes set to those of tasksche.exe.
-
