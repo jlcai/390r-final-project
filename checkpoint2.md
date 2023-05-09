@@ -99,6 +99,16 @@ PeStudio found that the executable is hiding an embedded file in the .rsrc secti
 
 #### File Extensions
 
-This is where PeStudio caught 
+This is where PeStudio caught many malicious strings in the program. We can see that these strings are representing different function calls and Windows Systems calls. These include modifying registry values, copying, writing to, and destroying files, creating and modifying system services and processes, creating and destroying cryptographic keys, and encrypting file data. From these files, PeStudio tells us that the program is most likely ransomware or wiper malware, which WannaCry most certainly is.
 
 ### Imports
+
+Finally, we have the imports. Many malwares rely on importing various DLLs to perform different functions just like any other program. But by studying which imports a program uses, we can determine if it is a malicious actor or not. In this case, the program is using imports to create services and processes, edit registry values, write to files, and calling rand and srand to generate cryptographic keys. One of the specific imports it uses is VirtualProtect.
+
+### VirtualProtect
+
+Virtual protect is a function that changes the protection of a memory address in the process's space. This allows the malware to read, write, and execute from various parts of the memory, which lets a malicious actor write and execute code anywhere they want if they have the permissions.
+
+### Next Steps for Analysis
+
+The next things to do with our automated analysis would be to run WannaCry in a sandbox such as [Cuckoo Sandbox](https://cuckoosandbox.org/) and see how it runs and makes the various system calls. 
