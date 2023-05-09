@@ -81,8 +81,7 @@ Once a machine is compromised with the ransomware, the ransomware automatically 
 After encryption of one machine, it installs **DoublePulsar**, a backdoor tool that runs in kernel mode allowing attackers control over a target system, as a payload that spreads copies of WannaCry onto more systems of vulnerable TCP port 455 machines.
 - [What is the WannaCry Ransomware Attack? | UpGuard](https://www.upguard.com/blog/wannacry)
 
-
-### Automated Analysis
+### PeStudio Analysis
 We used [PeStudio](https://www.winitor.com/) to analyze WannaCry. PeStudio is used to analyze Windows executables for malware and has a host of different features. Running it on the WannaCry executable we are told that its entropy, a measure of a malware's obfuscation, is 7.995 on a range of 0-8. Which means the malware is heavily obfuscated and packed. After letting PeStudio run, it returns with a few malicious indicators.  The top 4 are:
 - Resource sizes
 - Embedded files
@@ -109,6 +108,10 @@ Finally, we have the imports. Many malwares rely on importing various DLLs to pe
 
 Virtual protect is a function that changes the protection of a memory address in the process's space. This allows the malware to read, write, and execute from various parts of the memory, which lets a malicious actor write and execute code anywhere they want if they have the permissions.
 
-### Next Steps for Analysis
 
-The next things to do with our automated analysis would be to run WannaCry in a sandbox such as [Cuckoo Sandbox](https://cuckoosandbox.org/) and see how it runs and makes the various system calls. 
+##### Scripting Attempts
+Began working on a Ghidra script to view the control flow of the program along with the total amount of times each function is called but ran into issues finding info from the API.
+Another idea was to find all referenced functions from DLLs but not entirely sure if this needs to be automated at all.
+
+##### Continued Analysis
+Additionally found the winMain function from entry and discovered more functionality further in. Found where a directory is created and a file that seems to have the attributes set to those of tasksche.exe.
