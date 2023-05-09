@@ -97,6 +97,8 @@ We used [PeStudio](https://www.winitor.com/) to analyze WannaCry. PeStudio is us
 
 The executable consists of 4 headers: .text, .data, .rdata, and .rsrc. The .rscr section contains the resources required by the program. In this executable, the .rsrc header consists of 98.14% of the entire program, a common sign of malware as a method of obfuscation. 
 
+![Section Sizes](/screenshots/PeStudio_sections.png)
+
 #### Embedded Files
 
 PeStudio found that the executable is hiding an embedded file in the .rsrc section called PKZIP. PKZIP is what is taking up most of the file space across the entire program, so this is our actual malware. Putting the malware here instead of in .text where the program would generally go is another method of obfuscation and packing, making it harder for the programs intent to be discovered. 
