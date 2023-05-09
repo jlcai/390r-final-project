@@ -82,8 +82,9 @@ After encryption of one machine, it installs **DoublePulsar**, a backdoor tool t
 - [What is the WannaCry Ransomware Attack? | UpGuard](https://www.upguard.com/blog/wannacry)
 
 ##### Scripting Attempts
-Began working on a Ghidra script to view the control flow of the program along with the total amount of times each function is called but ran into issues finding info from the API.
-Another idea was to find all referenced functions from DLLs but not entirely sure if this needs to be automated at all.
+Began working on a Ghidra script to view the control flow of the program along with the total amount of times each function is called but ran into issues finding info from the API. Another idea was to find all 
+referenced functions from DLLs but not entirely sure if this needs to be automated at all. Most of my time went into watching Youtube tutorials on how to write scripts for Ghidra or trying to search the API for
+methods to get certain information.
 
 ##### Continued Analysis
 Additionally found the winMain function from entry and discovered more functionality further in. Found where a directory is created and a file that seems to have the attributes set to those of tasksche.exe.
